@@ -34,7 +34,7 @@
 #endif // COMMANDLINE_UTIL_H
 
 #include "ProducerSink.h"
-#include "Servo.h"
+// #include "Servo.h"
 #include "Logger.h"
 
 LOGGER_TAG("main")
@@ -80,28 +80,28 @@ static void s_changeShadowValue(
             desired.WithString(ele.first, ele.second.AsString());
             reported.WithString(ele.first, ele.second.AsString());
 
-            if (ele.first == "pan" || ele.first == "tilt")
-            {
-                angle = std::stoi(ele.second.AsString().c_str());
-                // pan angle range: 0~180 0 left, 90 middle, 180 right
-                // tilt angle range: 0~180 0 floor, 90 front, 180 up
-                if (angle <= 0)
-                {
-                    angle = 0;
-                }
-                else if (angle >= 180)
-                {
-                    angle = 180;
-                }
-                pulsewidth = servo::angleToPulsewidth(angle);
-                if (ele.first == "pan")
-                {
-                    servo::panServo(pulsewidth);
-                }
-                else
-                {
-                    servo::tiltServo(pulsewidth);
-                }
+            // if (ele.first == "pan" || ele.first == "tilt")
+            // {
+            //     angle = std::stoi(ele.second.AsString().c_str());
+            //     // pan angle range: 0~180 0 left, 90 middle, 180 right
+            //     // tilt angle range: 0~180 0 floor, 90 front, 180 up
+            //     if (angle <= 0)
+            //     {
+            //         angle = 0;
+            //     }
+            //     else if (angle >= 180)
+            //     {
+            //         angle = 180;
+            //     }
+            //     pulsewidth = servo::angleToPulsewidth(angle);
+            //     if (ele.first == "pan")
+            //     {
+            //         servo::panServo(pulsewidth);
+            //     }
+            //     else
+            //     {
+            //         servo::tiltServo(pulsewidth);
+            //     }
             }
         }
     }
@@ -269,7 +269,7 @@ int main(int argc, char **argv)
 
         if (gpioInitialise() < 0)
             return -1;
-        gpioSetSignalFunc(SIGINT, servo::stop);
+        // gpioSetSignalFunc(SIGINT, servo::stop);
 
         /********************** Shadow Delta Updates ********************/
         // This section is for when a Shadow document updates/changes, whether it is on the server side or client side.

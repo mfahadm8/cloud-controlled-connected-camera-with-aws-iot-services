@@ -118,15 +118,13 @@ target_link_libraries(gstkvssink PRIVATE ${GST_APP_LIBRARIES} KinesisVideoProduc
 #########################################################################
 # webrtc
 add_library(c3webrtc
-        source/Servo.cpp
         source/DeviceManager.cpp
         source/utils/CommandLineUtils.cpp
         source/WebRtcCommon.cpp
         source/WebRtcSink.cpp
 )
 
-target_link_libraries(c3webrtc
-        pigpio 
+target_link_libraries(c3webrtc 
         ${GSTREAMER_LIBRARIES} ${LOG4CPLUS_LIBRARIES}
         ${GST_APP_LIBRARIES}
         kvsWebrtcClient
@@ -147,14 +145,12 @@ target_link_libraries(
 #########################################################################
 # producer
 add_library(c3producer
-        source/Servo.cpp
         source/DeviceManager.cpp
         source/utils/CommandLineUtils.cpp
         source/ProducerSink.cpp
 )
 
 target_link_libraries(c3producer
-        pigpio 
         ${GSTREAMER_LIBRARIES} ${LOG4CPLUS_LIBRARIES}
         ${GST_APP_LIBRARIES}
         kvsWebrtcClient

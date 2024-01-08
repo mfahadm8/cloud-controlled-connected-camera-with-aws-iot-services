@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 #include "DeviceManager.h"
-#include "Servo.h"
+// #include "Servo.h"
 #include "Logger.h"
 
 LOGGER_TAG("devicemanager")
@@ -54,15 +54,15 @@ static void s_changeShadowValue(
                 {
                     angle = 180;
                 }
-                pulsewidth = servo::angleToPulsewidth(angle);
-                if (ele.first == "pan")
-                {
-                    servo::panServo(pulsewidth);
-                }
-                else
-                {
-                    servo::tiltServo(pulsewidth);
-                }
+                // pulsewidth = servo::angleToPulsewidth(angle);
+                // if (ele.first == "pan")
+                // {
+                //     servo::panServo(pulsewidth);
+                // }
+                // else
+                // {
+                //     servo::tiltServo(pulsewidth);
+                // }
             }
         }
     }
@@ -188,7 +188,7 @@ int mamageDeviceShadow(
 
         if (gpioInitialise() < 0)
             return -1;
-        gpioSetSignalFunc(SIGINT, servo::stop);
+        // gpioSetSignalFunc(SIGINT, servo::stop);
 
         /********************** Shadow Delta Updates ********************/
         // This section is for when a Shadow document updates/changes, whether it is on the server side or client side.
