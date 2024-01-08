@@ -186,8 +186,8 @@ int mamageDeviceShadow(
     {
         Aws::Iotshadow::IotShadowClient shadowClient(connection);
 
-        if (gpioInitialise() < 0)
-            return -1;
+        // if (gpioInitialise() < 0)
+        //     return -1;
         // gpioSetSignalFunc(SIGINT, servo::stop);
 
         /********************** Shadow Delta Updates ********************/
@@ -514,7 +514,7 @@ int mamageDeviceShadow(
     {
         connectionClosedPromise.get_future().wait();
     }
-    gpioTerminate();
+    // gpioTerminate();
 
     return 0;
 }

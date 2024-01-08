@@ -267,8 +267,8 @@ int main(int argc, char **argv)
     {
         Aws::Iotshadow::IotShadowClient shadowClient(connection);
 
-        if (gpioInitialise() < 0)
-            return -1;
+        // if (gpioInitialise() < 0)
+        //     return -1;
         // gpioSetSignalFunc(SIGINT, servo::stop);
 
         /********************** Shadow Delta Updates ********************/
@@ -600,7 +600,7 @@ int main(int argc, char **argv)
     {
         connectionClosedPromise.get_future().wait();
     }
-    gpioTerminate();
+    // gpioTerminate();
 
     /* ------------------------------------------------ */
     // Wait for threads
