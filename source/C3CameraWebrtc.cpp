@@ -23,7 +23,6 @@
 #include "utils/CommandLineUtils.h"
 #endif // COMMANDLINE_UTIL_H
 
-#include "DeviceManager.h"
 #include "Logger.h"
 #include "WebRtcCommon.h"
 
@@ -45,12 +44,6 @@ int main(int argc, char **argv)
      */
     Utils::cmdData cmdData = Utils::parseSampleInputShadow(argc, argv, &apiHandle);
 
-    /* ------------------------------------------------ */
-    /// device shadow
-    std::thread thread_shadow([&cmdData]
-                              { mamageDeviceShadow(cmdData); });
-    LOG_INFO("[DEVICE] thread_shadow started");
-    // /* ------------------------------------------------ */
 
     // for KVS WebRTC
     STATUS retStatus = STATUS_SUCCESS;

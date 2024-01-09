@@ -81,7 +81,7 @@ int gst_init_resources_kvs(KVSCustomData *kvsdata, Utils::cmdData *cmdData)
     LOG_INFO("Entering gst_init_resources_kvs... ");
 
     GstStateChangeReturn ret;
-    GstPlugin *plugin = gst_plugin_load_file("/home/pi/sdk-workspace/amazon-kinesis-video-streams-producer-sdk-cpp-build/libgstkvssink.so", NULL);
+    GstPlugin *plugin = gst_plugin_load_file("/home/pi/cloud-controlled-connected-camera-with-aws-iot-services/build/libgstkvssink.so", NULL);
 
     if (plugin == nullptr)
     {
