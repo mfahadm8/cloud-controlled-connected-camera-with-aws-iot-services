@@ -203,10 +203,13 @@ int main(int argc, char **argv)
             {
                 std::lock_guard<std::mutex> lock(receiveMutex);
                 ++receivedCount;
-                fprintf(stdout, "Publish #%d received on topic %s\n", receivedCount, topic.c_str());
-                fprintf(stdout, "Message: ");
-                fwrite(byteBuf.buffer, 1, byteBuf.len, stdout);
-                fprintf(stdout, "\n");
+        if (topic == "thingname/kvs/start") {
+            LOG_INFO("Got message to start stream");
+            startStream(kvsdata, cmdData); 
+        } else if (topic == "thingname/kvs/stop") {
+            LOG_INFO("Got message to start stream");
+            stopStream(kvsdata);
+        }
             }
 
             receiveSignal.notify_all();
@@ -236,7 +239,7 @@ int main(int argc, char **argv)
                 subscribeFinishedPromise.set_value();
             };
 
-        connection->Subscribe("thing/kvs/start", AWS_MQTT_QOS_AT_LEAST_ONCE, onMessage, onSubAck);
+        connection->Subscribe("thingname/kvs/#", AWS_MQTT_QOS_AT_LEAST_ONCE, onMessage, onSubAck);
         subscribeFinishedPromise.get_future().wait();
     }
     // Define onSubAck handler
