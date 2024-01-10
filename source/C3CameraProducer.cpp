@@ -175,20 +175,12 @@ int main(int argc, char **argv)
         LOG_FATAL("[DEVICE] MQTT Connection failed with error " << ErrorDebugString(connection->LastError()));
         exit(-1);
     }
-    auto onMessageReceived = [&kvsdata, &cmdData](Aws::Crt::Mqtt::MqttConnection& connection, const std::string& topic, const aws_byte_buf& payload, bool dup, aws_mqtt_qos qos, bool retain) {
-        // Your existing logic
-        if (topic == "thingname/kvs/start") {
-            startStream(kvsdata, cmdData); 
-        } else if (topic == "thingname/kvs/stop") {
-            stopStream(kvsdata);
-        }
-    };
 
     if (connectionCompletedPromise.get_future().get())
     {  // Update the lambda to capture cmdData by copy or reference
-    }
 
-    auto onSubAck = [](uint16_t packetId, const Aws::Crt::String &topic, Aws::Crt::Mqtt::QOS qos, int errorCode) {
+    // Define onSubAck handler
+    auto onSubAck = [](Aws::Crt::Mqtt::MqttConnection&, uint16_t packetId, const Aws::Crt::String &topic, Aws::Crt::Mqtt::QOS qos, int errorCode) {
         if (errorCode == AWS_OP_SUCCESS) {
             LOG_INFO("[DEVICE] Subscription to topic " << topic << " successful with packetId " << packetId);
         } else {
@@ -196,10 +188,19 @@ int main(int argc, char **argv)
         }
     };
 
-    connection->Subscribe("thingname/kvs/start", Aws::Crt::Mqtt::QOS::AT_LEAST_ONCE, onMessageReceived, onSubAck);
-    connection->Subscribe("thingname/kvs/stop", Aws::Crt::Mqtt::QOS::AT_LEAST_ONCE, onMessageReceived, onSubAck);
+    // Define onMessageReceived with capture list
+    auto onMessageReceived = [&kvsdata, &cmdData](Aws::Crt::Mqtt::MqttConnection&, const Aws::Crt::String& topic, const Aws::Crt::ByteBuf&, bool, Aws::Crt::Mqtt::QOS, bool) {
+        if (topic == "thingname/kvs/start") {
+            startStream(kvsdata, cmdData); 
+        } else if (topic == "thingname/kvs/stop") {
+            stopStream(kvsdata);
+        }
+    };
 
-
+    // Subscribe to topics
+    connection->Subscribe("thingname/kvs/start", Aws::Crt::Mqtt::QOS::AWS_MQTT_QOS_AT_LEAST_ONCE, onMessageReceived, onSubAck);
+    connection->Subscribe("thingname/kvs/stop", Aws::Crt::Mqtt::QOS::AWS_MQTT_QOS_AT_LEAST_ONCE, onMessageReceived, onSubAck);
+    }
     // Main loop
     std::unique_lock<std::mutex> lock(streamMutex);
     while (streamStarted) {
