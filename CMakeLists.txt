@@ -17,6 +17,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake;${CMAKE_MODULE_PATH}")
 # pass custom ca cert location to webrtc sdk
 # add_definitions(-DKVS_CA_CERT_PATH="${CMAKE_SOURCE_DIR}/certs/cert.pem")
 # add_definitions(-DCMAKE_DETECTED_CACERT_PATH)
+option(USE_MBEDTLS "Use MBEDTLS for SSL/TLS" ON)
 
 #########################################################################
 FetchContent_Declare(
