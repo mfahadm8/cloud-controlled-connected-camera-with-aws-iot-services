@@ -29,7 +29,7 @@ FetchContent_Declare(
 FetchContent_Declare(
   webrtc
   GIT_REPOSITORY https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-c
-  GIT_TAG        v1.8.1
+  GIT_TAG        master
 )
 
 # git show-ref v1.27.0 3d66ef32c27143ab84403b6c4179913686fd25b0

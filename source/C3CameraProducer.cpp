@@ -191,8 +191,10 @@ int main(int argc, char **argv)
     // Define onMessageReceived with capture list
     auto onMessageReceived = [&kvsdata, &cmdData](Aws::Crt::Mqtt::MqttConnection&, const Aws::Crt::String& topic, const Aws::Crt::ByteBuf&, bool, Aws::Crt::Mqtt::QOS, bool) {
         if (topic == "thingname/kvs/start") {
+            LOG_INFO("Got message to start stream");
             startStream(kvsdata, cmdData); 
         } else if (topic == "thingname/kvs/stop") {
+            LOG_INFO("Got message to start stream");
             stopStream(kvsdata);
         }
     };
@@ -207,11 +209,11 @@ int main(int argc, char **argv)
         streamCondition.wait(lock);
     }
 
-    // Disconnect
-    if (connection->Disconnect())
-    {
-        connectionClosedPromise.get_future().wait();
-    }
+    // // Disconnect
+    // if (connection->Disconnect())
+    // {
+    //     connectionClosedPromise.get_future().wait();
+    // }
   
     return 0;
 }
